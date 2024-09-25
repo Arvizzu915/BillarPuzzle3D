@@ -8,9 +8,19 @@ public class HitBall : MonoBehaviour
 {
     [SerializeField] float ballSpeed;
 
-    Vector3 hitDirection = Vector3.zero;
+    public bool moving = false;
+    public bool playerInRange = false;
+
+    public Vector3 hitDirection = Vector3.zero;
 
     Rigidbody rbBall;
+
+    public static HitBall instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -18,25 +28,23 @@ public class HitBall : MonoBehaviour
         rbBall = GetComponent<Rigidbody>();
 
         hitDirection = Vector3.left;
-
-        rbBall.constraints = RigidbodyConstraints.None;
-        rbBall.constraints = RigidbodyConstraints.FreezePositionZ;
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*
-        if (transform.position.x < distance.x) 
+
+    }
+
+    private void FixedUpdate()
+    {
+
+        if (moving) 
         {
-            rbBall.velocity = rbBall.velocity;
+            rbBall.isKinematic = false;
+            //rbBall.constraints = RigidbodyConstraints.None;
+            rbBall.velocity = hitDirection * ballSpeed;
         }
-        else
-        {
-            rbBall.velocity = Vector3.zero;
-        }
-        */
-        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -44,22 +52,24 @@ public class HitBall : MonoBehaviour
         if (collision.gameObject.CompareTag("Ball") || collision.gameObject.CompareTag("Bumper"))
         {
             rbBall.velocity = Vector3.zero;
+            transform.position = transform.position + (-hitDirection * .05f);
+            rbBall.isKinematic = true;
+            moving = false;
         }
     }
 
-    
 
     public void Hit(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.performed)
+        if (playerInRange && callbackContext.performed)
         {
-            rbBall.velocity = hitDirection * ballSpeed;
+            moving = true;
         }
     }
 
 
 
-
+    /*
     public void ChangeHitDirection(InputAction.CallbackContext callbackContext)
     {
         Vector2 input = callbackContext.ReadValue<Vector2>();
@@ -96,4 +106,5 @@ public class HitBall : MonoBehaviour
             rbBall.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationX;
         }
     }
+    */
 }
