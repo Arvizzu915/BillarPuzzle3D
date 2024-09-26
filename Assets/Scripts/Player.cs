@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = moveDirection * playerSpeed;
+        rb.velocity = new Vector3(moveDirection.x * playerSpeed, rb.velocity.y, moveDirection.z * playerSpeed);
     }
 
 
@@ -24,4 +24,11 @@ public class Player : MonoBehaviour
         }
     }
     
+    public void Jump(InputAction.CallbackContext callbackContext) 
+    {
+        if (callbackContext.performed)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
 }
