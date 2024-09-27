@@ -49,12 +49,23 @@ public class HitBall : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ball") || collision.gameObject.CompareTag("Bumper"))
+        if (collision.gameObject.CompareTag("Bumper"))
         {
             rbBall.velocity = Vector3.zero;
             transform.position = transform.position + (-hitDirection * .05f);
             rbBall.isKinematic = true;
             moving = false;
+        }
+
+        if (collision.gameObject.CompareTag("Ball"))
+        {
+            rbBall.velocity = Vector3.zero;
+            transform.position = transform.position + (-hitDirection * .05f);
+            rbBall.isKinematic = true;
+            moving = false;
+            Ball ballScript = collision.gameObject.GetComponent<Ball>();
+            ballScript.moving = true;
+            ballScript.direction = hitDirection;
         }
     }
 
@@ -67,44 +78,4 @@ public class HitBall : MonoBehaviour
         }
     }
 
-
-
-    /*
-    public void ChangeHitDirection(InputAction.CallbackContext callbackContext)
-    {
-        Vector2 input = callbackContext.ReadValue<Vector2>();
-
-        if (input == Vector2.right)
-        {
-            hitDirection = Vector3.left;
-
-            rbBall.constraints = RigidbodyConstraints.None;
-            rbBall.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ;
-        }
-
-        if (input == Vector2.left)
-        {
-            hitDirection = Vector3.right;
-
-            rbBall.constraints = RigidbodyConstraints.None;
-            rbBall.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationZ;
-        }
-
-        if (input == Vector2.up)
-        {
-            hitDirection = new Vector3(0, 0, -1);
-
-            rbBall.constraints = RigidbodyConstraints.None;
-            rbBall.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationX;
-        }
-
-        if (input == Vector2.down)
-        {
-            hitDirection = new Vector3(0, 0, 1);
-
-            rbBall.constraints = RigidbodyConstraints.None;
-            rbBall.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotationX;
-        }
-    }
-    */
 }
