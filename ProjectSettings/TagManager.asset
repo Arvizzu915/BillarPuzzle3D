@@ -7,6 +7,7 @@ TagManager:
   - Hole
   - Ball
   - Bumper
+  - DirPad
   layers:
   - Default
   - TransparentFX
