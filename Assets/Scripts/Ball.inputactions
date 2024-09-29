@@ -1,0 +1,34 @@
+{
+    "name": "Ball",
+    "maps": [
+        {
+            "name": "InLevel",
+            "id": "d17b244d-8050-4e63-968e-3c60bae2078d",
+            "actions": [
+                {
+                    "name": "Hit",
+                    "type": "Button",
+                    "id": "ea4ff814-df78-47f6-a1a9-bf70f35977c5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f03a16de-1a89-464a-ad43-2c07cd3f9649",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
